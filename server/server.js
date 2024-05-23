@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 const Document = require("./Document");
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+const PORT = process.env.PORT || 3000;
 require("dotenv").config();
+
+const server = http.createServer(app);
+const app = express();
+
+app.get("/", (req, res) => {
+    res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`);
+    res.end();
+});
 
 mongoose
     .connect(process.env.DB_URL)
@@ -9,14 +23,8 @@ mongoose
 
 const defaultValue = "";
 
-const io = require("socket.io")(3000 || process.env.BACKEND_URL, {
-    cors: {
-        origin: "https://google-docs-clone-zaid.vercel.app",
-        methods: ["GET", "POST"],
-    },
-});
-
 io.on("connection", (socket) => {
+    console.log("a user connected");
     socket.on("get-document", async (documentId) => {
         const document = await findOrCreateDocument(documentId);
         socket.join(documentId);
@@ -38,3 +46,7 @@ async function findOrCreateDocument(id) {
     if (document) return document;
     return await Document.create({ _id: id, data: defaultValue });
 }
+
+server.listen(PORT, () => {
+    console.log("listening on *:3000");
+});
