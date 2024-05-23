@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Document = require("./Document");
+require("dotenv").config();
 
 mongoose
-    .connect("mongodb://localhost/google-docs-clone")
+    .connect(process.env.DB_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("Failed to connect to MongoDB", err));
 
@@ -10,7 +11,7 @@ const defaultValue = "";
 
 const io = require("socket.io")(3000, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "https://google-docs-clone-zaid.vercel.app/",
         methods: ["GET", "POST"],
     },
 });
