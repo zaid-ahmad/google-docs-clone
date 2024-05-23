@@ -9,9 +9,9 @@ mongoose
 
 const defaultValue = "";
 
-const io = require("socket.io")(3000, {
+const io = require("socket.io")(3000 || process.env.BACKEND_URL, {
     cors: {
-        origin: "https://google-docs-clone-zaid.vercel.app/",
+        origin: "https://google-docs-clone-zaid.vercel.app",
         methods: ["GET", "POST"],
     },
 });
