@@ -7,9 +7,9 @@ const { Server } = require("socket.io");
 const PORT = process.env.PORT || 3000;
 require("dotenv").config();
 
-const io = new Server(server);
 const app = express();
 const server = http.createServer(app);
+const io = new Server(server);
 
 app.get("/", (req, res) => {
     res.write(`<h1>Socket IO Start on Port: ${PORT}</h1>`);
