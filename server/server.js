@@ -9,7 +9,12 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "https://google-docs-clone-zaid.vercel.app",
+        methods: ["GET", "POST"],
+    },
+});
 
 app.get("/", (req, res) => {
     res.write(`<h1>Socket IO Start on Port: ${PORT}</h1>`);
