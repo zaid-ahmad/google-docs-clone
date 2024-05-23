@@ -12,7 +12,7 @@ const io = new Server(server);
 const app = express();
 
 app.get("/", (req, res) => {
-    res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`);
+    res.write(`<h1>Socket IO Start on Port: ${PORT}</h1>`);
     res.end();
 });
 
